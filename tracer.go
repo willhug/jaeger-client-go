@@ -160,7 +160,7 @@ func (t *tracer) startSpanWithOptions(
 	for _, ref := range options.References {
 		if ref.Type == opentracing.ChildOfRef {
 			if p, ok := ref.ReferencedContext.(SpanContext); ok {
-				if p.IsValid() || p.isDebugIDContainerOnly() {
+				if p.IsValid() || p.isContainerOnly() {
 					parent = p
 					hasParent = true
 					break
@@ -182,7 +182,7 @@ func (t *tracer) startSpanWithOptions(
 
 	var samplerTags []tag
 	var ctx SpanContext
-	debugRequest := (hasParent && parent.isDebugIDContainerOnly())
+	debugRequest := (hasParent && parent.isContainerOnly())
 	if !hasParent || debugRequest {
 		ctx.traceID = t.randomID()
 		ctx.spanID = ctx.traceID
