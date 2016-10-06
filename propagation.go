@@ -25,12 +25,12 @@ import (
 	"encoding/binary"
 	"fmt"
 	"io"
+	"log"
 	"net/url"
 	"strings"
 	"sync"
 
 	opentracing "github.com/opentracing/opentracing-go"
-	"log"
 )
 
 // Injector is responsible for injecting SpanContext instances in a manner suitable
@@ -162,7 +162,7 @@ func (p *textMapPropagator) Extract(abstractCarrier interface{}) (SpanContext, e
 		p.tracer.metrics.DecodingErrors.Inc(1)
 		return emptyContext, err
 	}
-	if ctx.traceID == 0 && ctx.debugID == "" && baggage == nil {
+	if ctx.traceID == 0 && ctx.debugID == "" && len(baggage) == 0 {
 		return emptyContext, opentracing.ErrSpanContextNotFound
 	}
 	ctx.baggage = baggage

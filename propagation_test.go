@@ -158,8 +158,7 @@ func TestJaegerBaggageHeader(t *testing.T) {
 	sp2, err := tracer.Extract(opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(h))
 	require.NoError(t, err)
 
-	assert.Equal(t, map[string]string{"key1": "value1",
-		"key2": "value two"}, sp2.(SpanContext).baggage)
+	assert.Equal(t, map[string]string{"key1": "value1", "key 2": "value two"}, sp2.(SpanContext).baggage)
 }
 
 func TestParseCommaSeperatedMap(t *testing.T) {
