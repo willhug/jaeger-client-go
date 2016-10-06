@@ -279,6 +279,7 @@ func parseCommaSeparatedMap(value string) map[string]string {
 		s, err := url.QueryUnescape(strings.TrimSpace(kvpair))
 		if err != nil {
 			log.Printf("Unable to unescape %s", kvpair)
+			continue
 		}
 		kv := strings.Split(s, "=")
 		if len(kv) == 2 {
