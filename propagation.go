@@ -274,14 +274,13 @@ func (p *binaryPropagator) Extract(abstractCarrier interface{}) (SpanContext, er
 //                                     "key3" : "value3" }
 func parseCommaSeparatedMap(value string) map[string]string {
 	baggage := make(map[string]string)
-	kvpairs := strings.Split(value, ",")
-	for _, kvpair := range kvpairs {
-		s, err := url.QueryUnescape(strings.TrimSpace(kvpair))
-		if err != nil {
-			log.Printf("Unable to unescape %s", kvpair)
-			continue
-		}
-		kv := strings.Split(s, "=")
+	value, err := url.QueryUnescape(value)
+	if err != nil {
+		log.Printf("Unable to unescape %s, %v", value, err)
+		return baggage
+	}
+	for _, kvpair := range strings.Split(value, ",") {
+		kv := strings.Split(strings.TrimSpace(kvpair), "=")
 		if len(kv) == 2 {
 			baggage[kv[0]] = kv[1]
 		} else {

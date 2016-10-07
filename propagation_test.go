@@ -160,8 +160,8 @@ func TestJaegerBaggageHeader(t *testing.T) {
 
 	sp := tracer.StartSpan("root", opentracing.ChildOf(ctx)).(*span)
 
-	assert.Equal(t, map[string]string{"key1": "value1", "key 2": "value two"}, ctx.(SpanContext).baggage)
 	assert.Equal(t, "value1", sp.BaggageItem("key1"))
+	assert.Equal(t, "value two", sp.BaggageItem("key 2"))
 }
 
 func TestParseCommaSeperatedMap(t *testing.T) {
