@@ -123,7 +123,7 @@ An external process can inject baggage by setting the special
 HTTP Header `jaeger-baggage` on a request
 
 ```sh
-curl -H "jaeger-baggage: key1=value1&key2=value2" http://myhost.com
+curl -H "jaeger-baggage: key1=value1, key2=value2" http://myhost.com
 ```
 
 Baggage can also be programatically set inside your service by doing
